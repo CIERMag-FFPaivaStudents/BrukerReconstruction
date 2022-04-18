@@ -10,7 +10,6 @@ import gc
 import sys
 import numpy as np
 import nibabel as nib
-import matplotlib.pyplot as plt
 
 def readRAW(path, inputName):
     """Function to read RAW data from Paravision v5.1
@@ -202,9 +201,7 @@ def prepareData(rawComplexData, methodData):
     SPackArrPhase1Offset = methodData["PVM_SPackArrPhase1Offset"]
     SPackArrSliceOffset = methodData["PVM_SPackArrSliceOffset"]
     Fov = methodData["PVM_Fov"]
-    print(Fov)
     AntiAlias = methodData["PVM_AntiAlias"]
-    print(AntiAlias)
     SpatResol = methodData["PVM_SpatResol"]
 
     reshapedData = reshapeData(rawComplexData, dim)
@@ -660,10 +657,10 @@ def saveNIFTI(path, outputName, originalFileName, suffix, data, SpatResol):
 
 if __name__ == '__main__':
 
-    inputPath = '/home/solcia/Documents/phd/MRI data/Coral/6'
+    inputPath = '/home/solcia/Documents/phd/MRI data/Coral/13'
     outputPath = '/home/solcia/Documents/phd/MRI data/Coral'
 
-    inputName = '/ser'
+    inputName = '/fid'
     outputName = '/FLASH3D_'
 
     _,acqpData = readParameters(inputPath+'/acqp') #acqp stands for acquisition parameters
@@ -675,23 +672,11 @@ if __name__ == '__main__':
     
     preparedComplexData, SpatResol = prepareData(rawComplexData, methodData)
    
-    img_slice = 80
-
-    plt.figure()
-    plt.imshow(np.absolute(preparedComplexData[:,:,img_slice]), cmap='gray')
-
     spatialDomainData = applyFFT(preparedComplexData)
 
     magnitudeData = calculateMagnitude(spatialDomainData, acqpData, methodData)
     
-#    plt.figure()
-#    plt.imshow(magnitudeData[:,:,img_slice], cmap='gray')
-
     phaseData = calculatePhase(spatialDomainData)
-
-#    plt.figure()
-#    plt.imshow(phaseData[:,:,img_slice], cmap='gray')
-#    plt.show()
 
     saveNIFTI(outputPath, outputName, originalFileName, '_MAGNT', magnitudeData, SpatResol)
     saveNIFTI(outputPath, outputName, originalFileName, '_PHASE', phaseData, SpatResol)
