@@ -86,8 +86,6 @@ def readParameters(path):
                     parameterValue = parseSingleValue(currentLine)
 
                 parameterDict[parameterName] = parameterValue
-               # print(parameterName)
-               # print(parameterValue)
 
     return originalFileName, parameterDict
 
