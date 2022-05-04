@@ -2,6 +2,8 @@
 
 This repository contains code for reconstruction of Bruker MRI raw data from Paravision v5.1.
 
+This repository will be transformed into a package in the future.
+
 <table>
   <tr>
     <td align="center">
