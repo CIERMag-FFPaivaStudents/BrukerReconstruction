@@ -234,7 +234,7 @@ def reshapeData(rawComplexData, dim):
     """
 
     dim0 = dim[0]
-    dim0_mod_128 = dim0%120
+    dim0_mod_128 = dim0%128
 
     if dim0_mod_128 != 0: #Bruker sets readout point to a multiple of 128
         dim0 = (int(dim0/128+1))*128
